@@ -15,7 +15,6 @@ class FeedMain extends LitElement {
   constructor () {
     super()
     this.user = null
-
     this.load()
   }
 
@@ -35,7 +34,7 @@ class FeedMain extends LitElement {
       <main>
         <div>
           <nav>
-            <beaker-profile-info-card></beaker-profile-info-card>
+            <beaker-profile-info-card .user=${this.user}></beaker-profile-info-card>
           </nav>
           <article>
             <posts-feed user-url=${this.user ? this.user.url : ''}></posts-feed>
