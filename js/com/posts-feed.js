@@ -37,21 +37,41 @@ class PostsFeed extends LitElement {
   }
 
   async load () {
-    console.log('feed-posts load()', this.userUrl)
     this.followedUsers = (await followgraph.listFollows(this.userUrl)).map(site => site.url)
     this.posts = await feed.query({
       filters: {authors: this.feedAuthors},
-      limit: LOAD_LIMIT
+      limit: LOAD_LIMIT,
+      reverse: true
     })
     console.log(this.posts)
   }
 
+  // rendering
+  // =
+
   render () {
-    console.log('render()')
     return html`
-      <beaker-feed-composer></beaker-feed-composer>
+      <beaker-feed-composer @submit=${this.onSubmitFeedComposer}></beaker-feed-composer>
       ${repeat(this.posts, post => html`<beaker-feed-post .post=${post}></beaker-feed-post>`)}
     `
+  }
+
+  // events
+  // =
+
+  async onSubmitFeedComposer (e) {
+    // add the new post
+    try {
+      await feed.addPost({content: {body: e.detail.body}})
+    } catch (e) {
+      alert('Something went wrong. Please let the Beaker team know! (An error is logged in the console.)')
+      console.error('Failed to add post')
+      console.error(e)
+      return
+    }
+
+    // reload the feed to show the new post
+    this.load()
   }
 }
 PostsFeed.styles = postsFeedCSS
