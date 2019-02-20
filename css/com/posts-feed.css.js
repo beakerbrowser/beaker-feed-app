@@ -6,12 +6,12 @@ const cssStr = css`
   border: 1px solid #ddd;
 }
 
-feed-composer,
-feed-post {
+beaker-feed-composer,
+beaker-feed-post {
   border-bottom: 1px solid #ddd;
 }
 
-feed-post:last-of-type {
+beaker-feed-post:last-of-type {
   border-bottom: 0;
 }
 `
