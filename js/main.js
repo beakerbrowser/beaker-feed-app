@@ -24,11 +24,13 @@ class FeedMain extends LitElement {
   }
 
   render() {
-    console.log('app render')
+    if (!this.user) {
+      return html`<div></div>`
+    }
     return html`
       <link rel="stylesheet" href="/vendor/beaker-app-stdlib/css/fontawesome.css">
       <beaker-app-header
-        profile-pic-src="/img/tmp-profile.png"
+        current-user-url="${this.user.url}"
         fontawesome-src="/vendor/beaker-app-stdlib/css/fontawesome.css"
       ></beaker-app-header>
       <main>
